@@ -50,62 +50,37 @@ def generate_response(query, abstracts, model="claude-3-5-sonnet-20241022", max_
         f"{context}\n\n"
         "Markdown Template:\n\n"
         """
-        ## **Answer Summary**
+    ## **Answer Summary**
 
-        **[A direct, factual answer based solely on abstract content. If the answer is unclear or incomplete based on abstracts, state this.]**
+    **[A confident, one-sentence answer that directly addresses the user's query.]**
 
-        ---
+    ---
 
-        ## 🔍 **Key Findings**
-        - 🔑 **[Specific finding with numbers/statistics if available]**  
-        • *Evidence: [Quote or paraphrase from abstract]*
-        - 📌 **[Another specific finding from the abstracts]**  
-        • *Evidence: [Quote or paraphrase from abstract]*
-        - 💡 **[Additional finding if available in abstracts]**  
-        • *Evidence: [Quote or paraphrase from abstract]*
+    ## 🔍 **Key Insights**
+    - 🔑 [Important finding or point 1]  
+    - 📌 [Important finding or point 2]  
+    - 💡 [Important finding or point 3]  
+    - 📊 [Important finding or point 4]  
 
-        ---
+    ---
 
-        ## 📘 **Evidence Directly from Abstracts**
+    ## 📘 **Relevant Evidence from Abstracts**
+    - **Abstract 1**: [Supporting sentence or insight]  
+    - **Abstract 2**: [Supporting sentence or insight]  
+    - **Abstract 3**: [Supporting sentence or insight]  
+    *(Add more as needed)*
 
-        ### ✓ Supporting Evidence:
-        - **Abstract 1**: "[Direct quote or paraphrase]"  
-        - *Key metrics: [Specific numbers/statistics]*
-        - *Study design: [If mentioned]*
+    ---
 
-        - **Abstract 2**: "[Direct quote or paraphrase]"  
-        - *Key metrics: [Specific numbers/statistics]*
-        - *Study design: [If mentioned]*
+    ## 📈 **Implications**
+    - 🧠 [How this contributes to understanding the topic]  
+    - 🛠️ [Practical application, if any]  
+    - ⚠️ [Any limitations mentioned in the abstracts]  
 
-        ### ⚠️ Conflicting Evidence (if any):
-        - *[Mention any contradictions between abstracts, with sources]*
+    ---
 
-        ### 🔍 Evidence Gaps:
-        - *[Explicitly state what information is not available in the abstracts]*
-
-        ---
-
-        ## 📊 **Scientific Details**
-
-        | Aspect | Finding | Source |
-        |--------|---------|--------|
-        | [Specific measure] | [Value from abstract] | [Abstract #] |
-        | [Research design] | [Type mentioned] | [Abstract #] |
-        | [Sample size] | [Number if available] | [Abstract #] |
-
-        ---
-
-        ## 📈 **Implications Based Strictly on Abstracts**
-        - 🧠 **Scientific relevance**: [What the abstracts actually state about significance]  
-        - 🔬 **Study limitations**: [Limitations explicitly mentioned in abstracts]  
-        - ❓ **Areas requiring further research**: [Gaps noted in the abstracts]  
-
-        ---
-
-        ## 📎 **Conclusion**
-        **[Reiterate only what can be conclusively stated based on the abstracts. Clearly indicate if the abstracts don't provide sufficient information to answer the query fully.]**
-
-        *Note: This summary is based exclusively on the provided abstracts and may not represent the complete scientific understanding of this topic.*
+    ## 📎 **Conclusion**
+    **[Reinforce the main message in 1–2 confident sentences. Do not introduce uncertainty. If evidence is lacking, state that clearly.]**
     """
     )
 
