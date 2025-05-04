@@ -52,7 +52,7 @@ def generate_response(query, abstracts, model="claude-3-5-sonnet-20241022", max_
         """
     ## **Answer Summary**
 
-    **[A confident, one-sentence answer that directly addresses the user's query.]**
+    **[A confident, one-two sentence answer that directly addresses the user's query.]**
 
     ---
 
@@ -123,15 +123,15 @@ def extract_abstract_with_llm(content, url, model="claude-3-5-sonnet-20241022"):
     if not content_to_analyze:
         return ""
 
-    system_prompt = """You are an assistant specialized in extracting abstracts from research papers.
-        Your task is to identify and extract the abstract from the given paper content.
-        If you can't find a clear abstract, summarize the paper's main contributions in 200 words or less.
-        Focus on extracting exactly what's in the paper, not adding new information."""
+    system_prompt = """You are an abstract extraction system that outputs ONLY the abstract text.
+        Do not include any preamble like 'Based on...' or 'Here is...'.
+        Extract the abstract exactly as it appears, or if none exists, write a concise 200-word summary.
+        Output the text directly without any introduction or metadata."""
 
     user_prompt = (
-        f"Extract the abstract from the following research paper content from {url}. "
-        "If there's no clear abstract section, provide a brief summary (200 words max) "
-        "of the paper's main contributions and findings:\n\n"
+        f"Extract and output ONLY the abstract from this paper ({url}). "
+        "If no abstract section exists, summarize the main findings in 200 words. "
+        "Do not include any introductory phrases. Start directly with the abstract content:\n\n"
         f"{content_to_analyze}"
     )
 
@@ -140,7 +140,7 @@ def extract_abstract_with_llm(content, url, model="claude-3-5-sonnet-20241022"):
         message = anthropic.messages.create(
             model=model,
             max_tokens=400,
-            temperature=0.7,
+            temperature=0.3,
             system=system_prompt,
             messages=[
                 {"role": "user", "content": user_prompt}

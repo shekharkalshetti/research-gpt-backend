@@ -28,30 +28,34 @@ def research():
     if not search_results or not search_results.get("organic"):
         raise APIError("No search results found", 404)
 
-    print(f"Search results: {search_results}")
-
     # Step 2: Crawl the first 5 paper links
-    paper_links = [result["link"] for result in search_results["organic"][:5]]
-    crawled_content = crawl_papers(paper_links)
+    paper_links = [result.get("link")
+                   for result in search_results["organic"][:5]]
+    cited_by = [result.get("citedBy")
+                for result in search_results["organic"][:5]]
+    year = [result.get("year") for result in search_results["organic"][:5]]
+    publicationInfo = [result.get("publicationInfo")
+                       for result in search_results["organic"][:5]]
 
-    print(f"Crawled content: {crawled_content}")
+    crawled_content = crawl_papers(paper_links)
 
     # Step 3: Extract abstracts from the crawled content
     abstracts = extract_abstracts(crawled_content)
-
-    print(f"Extracted abstracts: {abstracts}")
 
     # Step 4: Generate response using LLM
     response = generate_response(user_query, abstracts)
 
     return jsonify({
         "query": user_query,
-        "paper_count": len(crawled_content),
         "papers": [
             {
                 "title": search_results["organic"][i]["title"],
+                "citedBy": cited_by[i],
+                "year": year[i],
+                "publicationInfo": publicationInfo[i],
                 "link": paper_links[i],
-                "abstract": abstracts[i] if i < len(abstracts) else None
+                "abstract": abstracts[i] if i < len(abstracts) else None,
+                "pdfUrl": search_results["organic"][i].get("pdfUrl", None)
             } for i in range(min(len(paper_links), len(abstracts)))
         ],
         "response": response
